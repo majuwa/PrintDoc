@@ -15,14 +15,21 @@
 			return self::$uniquee;
 		}
     	private function connect(){
-    			$connection = mysql_connect($this->mysqlhost,$this->mysqluser,$this->mysqlpwd) or die("Error while connecting");
-    			return mysql_select_db($connection,$this->mysqlDB);
+    			$mysqli = new mysqli($this->mysqlhost,$this->mysqluser,$this->mysqlpwd,$this->mysqlDB) or die("Error while connecting");  
+				  			
+				return $mysqli;
     	}
 		public function login($user,$pwd){
 			$conn = $this->connect();
-			$stmt = $conn->prepare("Select * from user where name = ? and pwd = ?");
-			$stmt->bindParam(1,$user);
-			$stmt->bindParam(2,hash("sha256", $pwd + "test"));
+			
+			$pwd = $pwd . "abd";
+			if(!$stmt = $conn->prepare("Select * from user where user = ? and pwd = ?")){
+				echo $conn->error;
+			}
+			$pwd = hash("sha256",$pwd);
+			$stmt->bind_param("ss",$user,$pwd );
+			//$stmt->bind_param());
+			//$stmt->bind_param(2,));
 			$stmt->execute();
 			if($stmt->fetch()){
 				return true;

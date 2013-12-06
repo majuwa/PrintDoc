@@ -12,10 +12,12 @@ class User {
 	private $pwd;
 	function __construct($user, $pwd) {
 		$this -> user = $user;
-		$this -> pwd = $user;
-		if (!($this -> login()))
+		$this -> pwd = $pwd;
+		if (!($this -> login())){
 			throw new UserException("Error User Data Wrong", 1);
-		$_SESSION["user"] = $user;
+		}
+		else
+			$_SESSION["login"] = true;
 	}
 
 	private function login() {

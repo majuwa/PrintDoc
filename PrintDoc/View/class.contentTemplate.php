@@ -3,8 +3,8 @@
      * 
      */
      require_once 'class.template.php';
-    class contentTemplate extends Template {
-        protected $url = "html/Files/content.php";
+    class ContentTemplate extends Template {
+        protected $url = "/var/www/printer/View/html/Files/content.php";
         
     }
     

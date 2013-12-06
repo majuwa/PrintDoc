@@ -10,6 +10,7 @@ require_once '/var/www/printer/Model/class.user.php';
 #------------------------
 class StateHTML extends outControll {
 	public function getOutput($state, $arrayContent) {
+
 		$template;
 		$warning;
 		switch ($state) {
@@ -18,12 +19,21 @@ class StateHTML extends outControll {
 				break;
 			case 'login' :
 				try {
-					$user = new User($arrayContent["user"], $arrayContent["pwd"]);
+					if (isset($arrayContent["user"]) && isset($arrayContent["pwd"])) {
+						$user = new User($arrayContent["user"], $arrayContent["pwd"]);
+						if ($user) {
+							$template = new ContentTemplate();
+							break;
+						}
+					}
 				} catch(UserException $e) {
 					$warning = "Wrong Username or password";
 				}
 			default :
-				$template = new LoginTemplate();
+				if (isset($_SESSION["login"]) && $_SESSION["login"] == true)
+					$template = new ContentTemplate();
+				else
+					$template = new LoginTemplate();
 				break;
 		}
 		$page = $template -> getTemplate();
