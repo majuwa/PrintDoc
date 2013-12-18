@@ -1,5 +1,5 @@
 <?php
     abstract class outControll{
-    	public abstract function getOutput($state, $arrayContent);
+    	public abstract function getOutput($state, $arrayContent,$file);
     }
 ?>

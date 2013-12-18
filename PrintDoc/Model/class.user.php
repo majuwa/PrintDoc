@@ -18,6 +18,7 @@ class User {
 		}
 		else
 			$_SESSION["login"] = true;
+			$_SESSION["username"] = $user;
 	}
 
 	private function login() {
